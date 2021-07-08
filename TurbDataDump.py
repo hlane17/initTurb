@@ -33,7 +33,7 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     f = h5py.File(datafolder + "/snapshot_" + ext + ".hdf5", "r")  #opens file
     ids = np.array(f["PartType0"]["ParticleIDs"])
     
-    velGrad = np.array(f["PartType0"]["Velocities"]["IDs"])
+    velGrad = np.array(f["PartType0"]["Velocities"])
     
     vRMSFinal.append(np.sqrt(np.sum(velGrad**2)/len(velGrad)))
 
@@ -52,7 +52,7 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     distances = (f["PartType0"]["Coordinates"])[ids <= 10**5]
 
     #print(len(np.array(f["PartType0"]["Masses"])))
-    mass = np.array(f["PartType0"]["Masses"])
+    mass = np.array(f["PartType0"]["Masses"])[ids <= 10**5]
     cmassX = np.sum(mass*positionsX)/np.sum(mass)
     cmassY = np.sum(mass*positionsY)/np.sum(mass)
     cmassZ = np.sum(mass*positionsZ)/np.sum(mass)
