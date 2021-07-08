@@ -32,7 +32,8 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     if (i>=100): ext=str(i)
     f = h5py.File(datafolder + "/snapshot_" + ext + ".hdf5", "r")  #opens file
     ids = np.array(f["PartType0"]["ParticleIDs"])
-    
+    n = 29.9 * np.array(f["PartType0"]["Density"]) # density in protons cm^-3
+    filter = (n>100)
     velGrad = np.array(f["PartType0"]["Velocities"])
     
     vRMSFinal.append(np.sqrt(np.sum(velGrad**2)/len(velGrad)))
@@ -41,15 +42,15 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     time = load_from_snapshot.load_from_snapshot("Time",0,datafolder,i)
     timeFinal.append(time)
 
-    mass = np.array(f["PartType0"]["Masses"])[ids <= 10**5]
+    mass = np.array(f["PartType0"]["Masses"])[filter]
 
-    positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][ids <= 10**5]
-    positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][ids <= 10**5]
-    positionsZ = np.array(f["PartType0"]["Coordinates"])[:,2][ids <= 10**5]
+    positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][filter]
+    positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][filter]
+    positionsZ = np.array(f["PartType0"]["Coordinates"])[:,2][filter]
     centerMassX.append(np.sum(mass*positionsX)/np.sum(mass))
     centerMassY.append(np.sum(mass*positionsY)/np.sum(mass))
     centerMassZ.append(np.sum(mass*positionsZ)/np.sum(mass))
-    distances = np.array(f["PartType0"]["Coordinates"])[ids <= 10**5]
+    distances = np.array(f["PartType0"]["Coordinates"])[filter]
 
     #print(len(np.array(f["PartType0"]["Masses"])))
     cmassX = np.sum(mass*positionsX)/np.sum(mass)
@@ -64,7 +65,7 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     distance = np.sqrt((distX**2) + (distY**2) + (distZ**2))
     #medianDist.append(np.median(distance))
     rmsDist.append(np.sqrt(np.sum((distance)**2)/len(distance)))
-    dx = np.array(f["PartType0"]["Coordinates"])[ids <= 10**5] - np.array([cmassX, cmassY, cmassZ]) # vector from COM
+    dx = np.array(f["PartType0"]["Coordinates"])[filter] - np.array([cmassX, cmassY, cmassZ]) # vector from COM
     distances = np.sqrt((dx*dx).sum(1)) # computes the distances sqrt(dX^2 + dY^2 + dZ^2)
     medianDist.append(np.median(distances))
 
