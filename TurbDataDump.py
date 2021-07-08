@@ -31,7 +31,7 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     if (i>=10): ext='0'+str(i)                                     #This resolves naming issues
     if (i>=100): ext=str(i)
     f = h5py.File(datafolder + "/snapshot_" + ext + ".hdf5", "r")  #opens file
-    ids = np.array(F["PartType0"]["ParticleIDs"])
+    ids = np.array(f["PartType0"]["ParticleIDs"])
     
     velGrad = np.array(f["PartType0"]["Velocities"]["IDs"])
     
