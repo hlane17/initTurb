@@ -49,7 +49,7 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     centerMassX.append(np.sum(mass*positionsX)/np.sum(mass))
     centerMassY.append(np.sum(mass*positionsY)/np.sum(mass))
     centerMassZ.append(np.sum(mass*positionsZ)/np.sum(mass))
-    distances = (f["PartType0"]["Coordinates"])[ids <= 10**5]
+    distances = np.array(f["PartType0"]["Coordinates"])[ids <= 10**5]
 
     #print(len(np.array(f["PartType0"]["Masses"])))
     mass = np.array(f["PartType0"]["Masses"])[ids <= 10**5]
