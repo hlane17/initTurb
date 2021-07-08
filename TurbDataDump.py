@@ -41,18 +41,17 @@ for i in range(snapNum): #This is for taking the FINAL Mach and Fraction#.
     time = load_from_snapshot.load_from_snapshot("Time",0,datafolder,i)
     timeFinal.append(time)
 
+    mass = np.array(f["PartType0"]["Masses"])[ids <= 10**5]
 
     positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][ids <= 10**5]
     positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][ids <= 10**5]
     positionsZ = np.array(f["PartType0"]["Coordinates"])[:,2][ids <= 10**5]
-    mass = np.array(f["PartType0"]["Masses"])
     centerMassX.append(np.sum(mass*positionsX)/np.sum(mass))
     centerMassY.append(np.sum(mass*positionsY)/np.sum(mass))
     centerMassZ.append(np.sum(mass*positionsZ)/np.sum(mass))
     distances = np.array(f["PartType0"]["Coordinates"])[ids <= 10**5]
 
     #print(len(np.array(f["PartType0"]["Masses"])))
-    mass = np.array(f["PartType0"]["Masses"])[ids <= 10**5]
     cmassX = np.sum(mass*positionsX)/np.sum(mass)
     cmassY = np.sum(mass*positionsY)/np.sum(mass)
     cmassZ = np.sum(mass*positionsZ)/np.sum(mass)
