@@ -41,7 +41,7 @@ for filename in filenames:
             velocities = np.array(f["PartType0"]["Velocities"])[ids]
             kineticEnergy = np.sum(0.5 * (masses[:,None]) * (velocities ** 2)) #calculates kinetic energy of the system
             KEs.append(kineticEnergy)    
-            Volumes = masses * density
+            Volumes = masses / density
             MagneticEnergy = np.sum(Volumes*(((np.array(f["PartType0"]["MagneticField"])[:,0][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,1][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,2][ids])**2) * magConstant))
             MEs.append(MagneticEnergy)
         
