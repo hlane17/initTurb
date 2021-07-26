@@ -14,18 +14,17 @@ filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_1
  
 
 # initialize lists to store all the stuff we will want in the final data file
-time = []
-massDensity10 = []
-KEs = []
-MEs = []
-GEs = []
-rmsDistCOM = []
-medianDistCOM = []
+
 magConstant = 5.88 * 10**24
 for filename in filenames: 
     for dir in glob(sims_dir+ filename + "/output"): # this will work without having to update the list of parameters in the script - just looks for all directories that match the pattern and have an output directory inside
-
-
+        time = []
+        massDensity10 = []
+        KEs = []
+        MEs = []
+        GEs = []
+        rmsDistCOM = []
+        medianDistCOM = []
         for i in range(751):
             ext='00'+str(i);
             if (i>=10): ext='0'+str(i)                                     #This resolves naming issues
@@ -69,9 +68,9 @@ for filename in filenames:
             medianDistCOM.append(np.median(distances))
             f.close()
  
-np.savetxt("GMC_" + filename + ".dat", np.c_[time, massDensity10, KEs, MEs, GEs, rmsDistCOM, medianDistCOM], 
-           header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) gravitational energy (5) rmsDistCOM (6) medianDistCOM"
-)
+        np.savetxt("GMC_" + filename + ".dat", np.c_[time, massDensity10, KEs, MEs, GEs, rmsDistCOM, medianDistCOM], 
+                   header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) gravitational energy (5) rmsDistCOM (6) medianDistCOM"
+        )
 
 
 # In[ ]:
