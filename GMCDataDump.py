@@ -38,14 +38,14 @@ for filename in filenames:
             time.append(load_from_snapshot.load_from_snapshot("Time",0,dir,i))
             masses = np.array(f["PartType0"]["Masses"])[ids]
             massDensity10.append(np.sum(masses))
-            velocities = np.array(f(["PartType0"]["Velocities"]))[ids]
+            velocities = np.array(f["PartType0"]["Velocities"])[ids]
             kineticEnergy = np.sum(0.5 * (masses[:,None]) * (velocities ** 2)) #calculates kinetic energy of the system
             KEs.append(kineticEnergy)    
             Volumes = masses * density
             MagneticEnergy = np.sum(Volumes*(((np.array(f["PartType0"]["MagneticField"])[:,0][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,1][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,2][ids])**2) * magConstant))
             MEs.append(MagneticEnergy)
         
-            GPE = 0.5 * np.sum(np.array(f(["PartType0"]["Potential"]))[ids] * masses)
+            GPE = 0.5 * np.sum(np.array(f["PartType0"]["Potential"])[ids] * masses)
             GEs.append(GPE)
         
             positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][ids]
