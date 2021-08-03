@@ -55,7 +55,7 @@ for filename in filenames:
         positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][ids]
         positionsZ = np.array(f["PartType0"]["Coordinates"])[:,2][ids]
 
-        distances = (f["PartType0"]["Coordinates"])[ids]
+        distances = np.array(f["PartType0"]["Coordinates"])[ids]
 
         cmassX = np.sum(masses*positionsX)/np.sum(masses)
         cmassY = np.sum(masses*positionsY)/np.sum(masses)
