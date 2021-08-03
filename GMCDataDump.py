@@ -9,6 +9,8 @@ from glob import glob
 import numpy as np
 from os.path import isdir
 import load_from_snapshot
+from sys import argv
+filenames = argv[1:]
 sims_dir = "/scratch1/08056/hlane17/GMCTurb/"
 filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.01", "a_800_0.5_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.1", "a_800_1_10_1e5_y_1_0.01", "a_800_1_10_2e7_y_1_1", "a_800_1_10_2e6_y_1_0.01", "a_800_1_10_2e7_y_2_0.01", "a_800_2_10_2e7_y_1_0.01",]    
 
