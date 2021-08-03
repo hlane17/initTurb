@@ -9,10 +9,8 @@ from glob import glob
 import numpy as np
 from os.path import isdir
 import load_from_snapshot
-from sys import argv
-filenames = argv[1:]
-sims_dir = "/scratch3/08056/hlane17/GMCTurb/"
-#filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.01", "a_800_0.5_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.1", "a_800_1_10_1e5_y_1_0.01", "a_800_1_10_2e7_y_1_1", "a_800_1_10_2e6_y_1_0.01", "a_800_1_10_2e7_y_2_0.01", "a_800_2_10_2e7_y_1_0.01",]    
+sims_dir = "/scratch1/08056/hlane17/GMCTurb/"
+filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.01", "a_800_0.5_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.1", "a_800_1_10_1e5_y_1_0.01", "a_800_1_10_2e7_y_1_1", "a_800_1_10_2e6_y_1_0.01", "a_800_1_10_2e7_y_2_0.01", "a_800_2_10_2e7_y_1_0.01",]    
 
 # initialize lists to store all the stuff we will want in the final data file
 
@@ -27,13 +25,14 @@ for filename in filenames:
         GEs = []
         rmsDistCOM = []
         medianDistCOM = []
-        i=1
         snaps = sorted(glob(sims_dir+ filename + "/output"))
+        i=1
         for snap in snaps:
             f = h5py.File(snap, 'r')
-            # do stuff...
             i+=1
             print(i)
+            # do stuff...
+
             #current_snap = sorted(glob(dir+"/snapshot*.hdf5"))[i] # get the last snapshot
             #print("snap_" + str(i))
             #f = h5py.File(current_snap, "r")  #opens file
@@ -76,16 +75,4 @@ for filename in filenames:
         np.savetxt("GMC_" + filename + ".dat", np.c_[time, massDensity10, KEs, MEs, GEs, rmsDistCOM, medianDistCOM], 
                    header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) gravitational energy (5) rmsDistCOM (6) medianDistCOM"
         )
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
