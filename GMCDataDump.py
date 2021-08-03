@@ -78,5 +78,5 @@ def DataDump(sim):
     )
 for filename in filenames:
     dirs= sims_dir + filename
-Pool(nproc).map(DataDump, dirs)
+    Pool(nproc).map(DataDump, dirs)
 
