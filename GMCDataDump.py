@@ -38,7 +38,7 @@ for filename in filenames:
         n = 29.9 * np.array(f["PartType0"]["Density"])
         ids = (n>10)
         density = np.array(f["PartType0"]["Density"])[ids]
-        time.append(load_from_snapshot.load_from_snapshot("Time",0,dir,i))
+        time.append(load_from_snapshot.load_from_snapshot("Time",0,snap)
         masses = np.array(f["PartType0"]["Masses"])[ids]
         massDensity10.append(np.sum(masses))
         velocities = np.array(f["PartType0"]["Velocities"])[ids]
