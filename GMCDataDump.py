@@ -16,26 +16,7 @@ filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_1
 
 magConstant = 5.88 * 10**24
 for filename in filenames:
-    if(filename ="a_1120_1_10_2e7_y_1_0.01"):
-        snapNum = 350
-    if(filename ="a_800_1_10_2e7_y_0.5_0.01"):
-        snapNum = 476
-    if(filename ="a_560_1_10_2e7_y_1_0.01"):
-        snapNum = 388   
-    if(filename = "a_800_1_10_2e7_y_1_0.01"):
-        snapNum = 361
-    if(filename = "a_800_1_10_2e7_y_1_0.1"):
-        snapNum = 247
-    if(filename = "a_800_1_10_1e5_y_1_0.01"):
-        snapNum = 751
-    if(filename = "a_800_1_10_2e7_y_1_1"):
-        snapNum = 43
-    if(filename = "a_800_1_10_2e6_y_1_0.01"):
-        snapNum = 751
-    if(filename = "a_800_1_10_2e7_y_2_0.01"):
-        snapNum = 257
-    if(filename = "a_800_2_10_2e7_y_1_0.01"):
-        snapNum = 751
+    snaps = sorted(glob(filename+"/snapshot*.hdf5"))
     for dir in glob(sims_dir+ filename + "/output"): # this will work without having to update the list of parameters in the script - just looks for all directories that match the pattern and have an output directory inside
         time = []
         massDensity10 = []
@@ -44,13 +25,14 @@ for filename in filenames:
         GEs = []
         rmsDistCOM = []
         medianDistCOM = []
-        for i in range(snapNum):
-            ext='00'+str(i);
-            if (i>=10): ext='0'+str(i)                                     #This resolves naming issues
-            if (i>=100): ext=str(i)
-            current_snap = sorted(glob(dir+"/snapshot*.hdf5"))[i] # get the last snapshot
+        snaps = sorted(glob(sims_dir+ filename + "/output"))
+        for snap in snaps:
+            f = h5py.File(snap, 'r')
+            # do stuff...
+
+            #current_snap = sorted(glob(dir+"/snapshot*.hdf5"))[i] # get the last snapshot
             print("snap_" + str(i))
-            f = h5py.File(current_snap, "r")  #opens file
+            #f = h5py.File(current_snap, "r")  #opens file
             n = 29.9 * np.array(f["PartType0"]["Density"])
             ids = (n>10)
             density = np.array(f["PartType0"]["Density"])[ids]
