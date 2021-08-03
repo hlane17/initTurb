@@ -17,7 +17,7 @@ filenames = argv[1:]
 
 magConstant = 5.88 * 10**24
 for filename in filenames:
-    snaps = sorted(glob(filename+"/snapshot*.hdf5"))
+    snaps = sorted(glob(sims_dir+filename+"/snapshot*.hdf5"))
     for dir in glob(sims_dir+ filename + "/output"): # this will work without having to update the list of parameters in the script - just looks for all directories that match the pattern and have an output directory inside
         time = []
         massDensity10 = []
