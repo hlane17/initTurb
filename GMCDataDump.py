@@ -31,7 +31,7 @@ for filename in filenames:
             # do stuff...
 
             #current_snap = sorted(glob(dir+"/snapshot*.hdf5"))[i] # get the last snapshot
-            print("snap_" + str(i))
+            #print("snap_" + str(i))
             #f = h5py.File(current_snap, "r")  #opens file
             n = 29.9 * np.array(f["PartType0"]["Density"])
             ids = (n>10)
