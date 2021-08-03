@@ -27,11 +27,13 @@ for filename in filenames:
         GEs = []
         rmsDistCOM = []
         medianDistCOM = []
+        i=1
         snaps = sorted(glob(sims_dir+ filename + "/output"))
         for snap in snaps:
             f = h5py.File(snap, 'r')
             # do stuff...
-
+            i+=1
+            print(i)
             #current_snap = sorted(glob(dir+"/snapshot*.hdf5"))[i] # get the last snapshot
             #print("snap_" + str(i))
             #f = h5py.File(current_snap, "r")  #opens file
