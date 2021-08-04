@@ -70,7 +70,7 @@ for filename in filenames:
  
 
     data = Pool(nproc).map(Function,snaps)
-    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", np.c_[data], 
+    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data, 
                 header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCOM (5) medianDistCOM"
     )
 
