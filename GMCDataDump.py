@@ -26,11 +26,14 @@ for filename in filenames:
         f = h5py.File(snap, 'r')
         print(f)
         n = 29.9 * np.array(f["PartType0"]["Density"])
+        
+        logn= np.log10(n)
+        bin_counts = np.histogram(logn,bins=np.linspace(-2,6,100))[0]
+        
         ids = (n>10)
         density = np.array(f["PartType0"]["Density"])[ids]
         
         time = f["Header"].attrs["Time"]       
-        rhoList.append(np.float64(np.array(f["PartType0"]["Density"])))
 
         masses = np.array(f["PartType0"]["Masses"])[ids]
         massDensity10 = np.sum(masses)
@@ -66,11 +69,17 @@ for filename in filenames:
         medianDistCom = np.median(distances)
         
         f.close()
-        return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom, rhoList
+        return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom, bin_counts
  
 
     data = Pool(nproc).map(Function,snaps)
-    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", np.c_[data], 
-                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCom (5) medianDistCom (6) densityLists"
+    data1 = [d[:-1] for d in data]
+    time = [d[0] for d in data1]
+    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data1, 
+                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCom (5) medianDistCom"
+    )
+    bincounts = [d[-1] for d in data]
+    np.savetxt(sims_dir + filename + "/PDF_" + filename + ".dat", np.c_[time, bincounts], 
+                header = "#(0) time (1) bincounts"
     )
 
