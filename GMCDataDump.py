@@ -23,16 +23,18 @@ for filename in filenames:
     snaps = sorted(glob(sims_dir+filename+"/output/snapshot*.hdf5"))
     i=0
     def Function(snap):
-
+        rhoList = []
         f = h5py.File(snap, 'r')
-        print(i)
+        print(f)
         i+=1
         n = 29.9 * np.array(f["PartType0"]["Density"])
         ids = (n>10)
         density = np.array(f["PartType0"]["Density"])[ids]
-        time = f["Header"].attrs["Time"] 
-        masses = np.array(f["PartType0"]["Masses"])[ids]
         
+        time = f["Header"].attrs["Time"]       
+        rhoList.append(np.float64(np.array(f["PartType0"]["Density"])))
+
+        masses = np.array(f["PartType0"]["Masses"])[ids]
         massDensity10 = np.sum(masses)
         
         velocities = np.array(f["PartType0"]["Velocities"])[ids]
@@ -50,7 +52,7 @@ for filename in filenames:
 
         distances = np.array(f["PartType0"]["Coordinates"])[ids]
         cmassX = np.sum(masses*positionsX)/np.sum(masses)
-        massY = np.sum(masses*positionsY)/np.sum(masses)
+        cmassY = np.sum(masses*positionsY)/np.sum(masses)
         cmassZ = np.sum(masses*positionsZ)/np.sum(masses)
 
         distX = distances[:,0]-cmassX
@@ -58,19 +60,19 @@ for filename in filenames:
         distZ = distances[:,2]-cmassZ
         distance = np.sqrt((distX**2) + (distY**2) + (distZ**2))
         
-        rmsDistCOM = (np.sqrt(np.sum((distance)**2)/len(distance)))
+        rmsDistCom = (np.sqrt(np.sum((distance)**2)/len(distance)))
         
         dx = np.array(f["PartType0"]["Coordinates"])[ids] - np.array([cmassX, cmassY, cmassZ]) # vector from COM
         distances = np.sqrt((dx*dx).sum(1)) # computes the distances sqrt(dX^2 + dY^2 + dZ^2)
         
-        medianDistCOM = np.median(distances))
+        medianDistCOM = np.median(distances)
         
         f.close()
-        return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom
+        return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom, rhoList
  
 
     data = Pool(nproc).map(Function,snaps)
-    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data, 
+    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", np.c_[data], 
                 header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCOM (5) medianDistCOM"
     )
 
