@@ -21,12 +21,10 @@ nproc = multiprocessing.cpu_count()
 magConstant = 5.88 * 10**24
 for filename in filenames:
     snaps = sorted(glob(sims_dir+filename+"/output/snapshot*.hdf5"))
-    i=0
     def Function(snap):
         rhoList = []
         f = h5py.File(snap, 'r')
         print(f)
-        i+=1
         n = 29.9 * np.array(f["PartType0"]["Density"])
         ids = (n>10)
         density = np.array(f["PartType0"]["Density"])[ids]
@@ -65,7 +63,7 @@ for filename in filenames:
         dx = np.array(f["PartType0"]["Coordinates"])[ids] - np.array([cmassX, cmassY, cmassZ]) # vector from COM
         distances = np.sqrt((dx*dx).sum(1)) # computes the distances sqrt(dX^2 + dY^2 + dZ^2)
         
-        medianDistCOM = np.median(distances)
+        medianDistCom = np.median(distances)
         
         f.close()
         return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom, rhoList
@@ -73,6 +71,6 @@ for filename in filenames:
 
     data = Pool(nproc).map(Function,snaps)
     np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", np.c_[data], 
-                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCOM (5) medianDistCOM (6) densityLists"
+                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCom (5) medianDistCom (6) densityLists"
     )
 
