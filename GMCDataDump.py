@@ -75,11 +75,16 @@ for filename in filenames:
     data = Pool(nproc).map(Function,snaps)
     data1 = [d[:-1] for d in data]
     time = [d[0] for d in data1]
+    print("test0")
     np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data1, 
                 header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCom (5) medianDistCom"
     )
+    print("test1")
     bincounts = [d[-1] for d in data]
+    print("test2")
     np.savetxt(sims_dir + filename + "/PDF_" + filename + ".dat", np.c_[time, bincounts], 
                 header = "#(0) time (1) bincounts"
     )
+    print("test3")
+    
 
