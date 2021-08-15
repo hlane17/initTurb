@@ -45,7 +45,7 @@ for filename in filenames:
         Volumes = masses / density
         
         magneticEnergy = np.sum(Volumes*(((np.array(f["PartType0"]["MagneticField"])[:,0][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,1][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,2][ids])**2) * magConstant))
-        gravPotEnergy = 0.5 * np.sum(np.array(f(["PartType0"]["Potential"]))[ids] * masses)
+        gravPotEnergy = 0.5 * np.sum(np.array(f["PartType0"]["Potential"])[ids] * masses)
         
         positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][ids]
         positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][ids]
