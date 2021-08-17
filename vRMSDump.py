@@ -24,9 +24,11 @@ for filename in filenames:
     def Function(snap):
         f = h5py.File(snap, 'r')
         print(f)
-        
-        n = 29.9 * np.array(f["PartType0"]["Density"])        
-        velGrad = np.array(f["PartType0"]["Velocities"]["IDs"])    
+       
+        n = 29.9 * np.array(f["PartType0"]["Density"])      
+        ids = (n>10)
+
+        velGrad = np.array(f["PartType0"]["Velocities"])[ids]    
         vRMS = np.sqrt(np.sum(velGrad**2)/len(velGrad))
         time = f["Header"].attrs["Time"]       
 
