@@ -40,7 +40,7 @@ for filename in filenames:
 
     data = Pool(nproc).map(Function,snaps)
 
-    np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data, 
+    np.savetxt(sims_dir + filename + "/PDF_" + filename + ".dat", data, 
                 header = "#(0) time (1) bincounts"
     )
 
