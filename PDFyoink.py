@@ -12,14 +12,14 @@ import load_from_snapshot
 from sys import argv
 import multiprocessing 
 from multiprocessing import Pool
-sims_dir = "/scratch3/03532/mgrudic/stirring/box_rerun/M2e4_R10_S0_T1_B0.01_Res271_n2_sol0.5_42_BOX"
+sims_dir = "/scratch3/03532/mgrudic/stirring/box_rerun/M2e4_R10_S0_T1_B0.01_Res271_n2_sol0.5_42_BOX/"
 #filenames = ["a_1120_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_0.5_0.01", "a_560_1_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.01", "a_800_0.5_10_2e7_y_1_0.01", "a_800_1_10_2e7_y_1_0.1", "a_800_1_10_1e5_y_1_0.01", "a_800_1_10_2e7_y_1_1", "a_800_1_10_2e6_y_1_0.01", "a_800_1_10_2e7_y_2_0.01", "a_800_2_10_2e7_y_1_0.01",]    
 filenames = argv[1:]
 # initialize lists to store all the stuff we will want in the final data file
 
 nproc = multiprocessing.cpu_count()
 for filename in filenames:
-    snaps = sorted(glob(sims_dir+filename+"/snapshot*.hdf5"))
+    snaps = sorted(glob(sims_dir+"output_mach10/snapshot*.hdf5"))
     def Function(snap):
         rhoList = []
         f = h5py.File(snap, 'r')
