@@ -29,7 +29,7 @@ for filename in filenames:
     f.close() 
 
 
-    np.savetxt("PDFOne_" + filename + ".dat", np.c_[time, bin_counts], 
+    np.savetxt("PDFOne_" + filename + ".dat", np.c_[bin_counts], 
             header = "#(0) time (1) bincounts"
 )
 
