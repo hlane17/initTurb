@@ -19,7 +19,7 @@ filenames = argv[1:]
 
 nproc = multiprocessing.cpu_count()
 for filename in filenames:
-    snaps = sorted(glob(sims_dir + filename+ "+/snapshot*.hdf5"))
+    snaps = sorted(glob(sims_dir + filename+ "/snapshot*.hdf5"))
     def Function(snap):
         rhoList = []
         f = h5py.File(snap, 'r')
@@ -40,7 +40,7 @@ for filename in filenames:
 
     data = Pool(nproc).map(Function,snaps)
 
-    np.savetxt(sims_dir + filename + "/PDFBOX_" + filename + ".dat", data, 
+    np.savetxt("PDFBOX_" + filename + ".dat", data, 
                 header = "#(0) time (1) bincounts"
     )
 
