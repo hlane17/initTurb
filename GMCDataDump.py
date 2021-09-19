@@ -45,7 +45,7 @@ for filename in filenames:
         Volumes = masses / density
         
         magneticEnergy = np.sum(Volumes*(((np.array(f["PartType0"]["MagneticField"])[:,0][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,1][ids])**2 + (np.array(f["PartType0"]["MagneticField"])[:,2][ids])**2) * magConstant))
-        
+        gravPotEnergy = 0.5 * np.sum(np.array(f["PartType0"]["Potential"])[ids] * masses)
         
         positionsX = np.array(f["PartType0"]["Coordinates"])[:,0][ids]
         positionsY = np.array(f["PartType0"]["Coordinates"])[:,1][ids]
@@ -69,22 +69,17 @@ for filename in filenames:
         medianDistCom = np.median(distances)
         
         f.close()
-        return time, massDensity10, kineticEnergy, magneticEnergy, rmsDistCom, medianDistCom, bin_counts
+        return time, massDensity10, kineticEnergy, magneticEnergy, gravPotEnergy, rmsDistCom, medianDistCom, bin_counts
  
 
     data = Pool(nproc).map(Function,snaps)
     data1 = [d[:-1] for d in data]
     time = [d[0] for d in data1]
-    print("test0")
     np.savetxt(sims_dir + filename + "/GMC_" + filename + ".dat", data1, 
-                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) rmsDistCom (5) medianDistCom"
+                header = "#(0) time (1) mDensity10 (2) kinetic energy (3) magnetic energy (4) gravitational potential energy (5) rmsDistCom (6) medianDistCom"
     )
-    print("test1")
     bincounts = [d[-1] for d in data]
-    print("test2")
     np.savetxt(sims_dir + filename + "/PDF_" + filename + ".dat", np.c_[time, bincounts], 
                 header = "#(0) time (1) bincounts"
     )
-    print("test3")
-    
 
