@@ -25,7 +25,10 @@ for snapshot in snapshots:
        
     n = 29.9 * np.array(f["PartType0"]["Density"])      
     ids = (n>10)
+    masses = np.array(f["PartType0"]["Masses"])[ids]
+    density = np.array(f["PartType0"]["Density"])[ids]
 
+    Volumes = masses / density
     velGrad = np.array(f["PartType0"]["Velocities"])[ids]    
     MachRMS = np.sqrt(np.sum(velGrad**2)/len(velGrad))/cms
         
