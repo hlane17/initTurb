@@ -56,7 +56,7 @@ for snapshot in snapshots:
     dx = np.array(f["PartType0"]["Coordinates"])[ids] - np.array([cmassX, cmassY, cmassZ]) # vector from COM
     distancesFinal = np.sqrt((dx*dx).sum(1)) # computes the distances sqrt(dX^2 + dY^2 + dZ^2)
         
-    medianDistCom = np.median(distancesFinal)
+    medianDistCOM = np.median(distancesFinal)
         
     velocities = np.array(f["PartType0"]["Velocities"])[ids]
     kineticEnergy = np.sum(0.5 * (masses[:,None]) * (velocities ** 2)) #calculates kinetic energy of the system
@@ -66,7 +66,7 @@ for snapshot in snapshots:
     f.close()
  
 
-    np.savetxt(sims_dir + "/" + snapshot + ".dat", np.c_[time, mus MachRMS, medianDistCOM, alpha], 
+    np.savetxt(sims_dir + "/" + snapshot + ".dat", np.c_[time, mus, MachRMS, medianDistCOM, alpha], 
                 header = "#(0) time (1) mus (2) MachRMS (3) R50 (4) alpha "
     )
 
